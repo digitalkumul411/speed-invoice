@@ -1,0 +1,34 @@
+{
+  "name": "speed-invoice",
+  "version": "1.0.0",
+  "description": "invoicing inventory management app",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/digitalkumul411/speed-invoice.git"
+  },
+  "keywords": [
+    "invoice",
+    "inventory"
+  ],
+  "author": "JAngap411",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/digitalkumul411/speed-invoice/issues"
+  },
+  "homepage": "https://github.com/digitalkumul411/speed-invoice#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mongoose": "^6.7.0"
+  },
+  "devDependencies": {
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.20"
+  }
+}
