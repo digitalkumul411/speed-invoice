@@ -4,6 +4,7 @@ const app = express();
 const PORT = process.env.PORT || 5555;
 const http = require("http");
 const morgan = require("morgan");
+const mongoose = require("mongoose");
 
 // import routes
 const clients = require("./routes/clientRoutes");
@@ -27,4 +28,24 @@ app.use("/api/v1", [clients, profiles, inventory, invoices]);
 
 // create http server
 const server = http.createServer(app);
-server.listen(PORT, () => console.log(`\nserver listening on PORT:${PORT}\n`));
+
+// connect to db
+const DB_URL = process.env.MONGO_URI;
+mongoose
+  .connect(DB_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    server.listen(PORT, () =>
+      console.log(`\nserver listening on PORT:${PORT}\n`)
+    );
+    console.log("then vlock");
+  })
+  .catch((err) => {
+    console.log("--- error ---");
+    console.error(err.message);
+  });
+
+// mongoose.set("useFindAndModify", false);
+// mongoose.set("useCreateIndex", true);
