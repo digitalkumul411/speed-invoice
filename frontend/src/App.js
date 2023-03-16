@@ -1,10 +1,12 @@
 import "./App.css";
+import Landing from "./pages/landing/Landing";
 
 const App = () => {
   return (
-    <div className="App">
+    <>
       <h1>Speed Invoice</h1>
-    </div>
+      <Landing />
+    </>
   );
 };
 
