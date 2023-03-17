@@ -1,6 +1,33 @@
+const Client = require("../models/Client");
+const mongoose = require("mongoose");
+
 // get clients list
-const getClients = (req, res) => {
-  res.status(200).json({ data: "clients" });
+const getClients = async (req, res) => {
+  const { page } = req.query;
+
+  try {
+    const LIMIT = 8;
+    // get starting index of every page
+    const startIndex = (Number(page) - 1) * LIMIT;
+
+    //
+    const total = await Client.countDocuments({});
+    const clients = await Client.find()
+      .sort({ _id: -1 })
+      .limit(LIMIT)
+      .skip(startIndex);
+
+    // response
+    res.status(200).json({
+      data: clients,
+      currentPage: Number(page),
+      numberOfPages: Math.ceil(total / LIMIT),
+    });
+
+    res.status(200).json({ data: "clients" });
+  } catch (error) {
+    res.status(500).json({ status: "error", data: error.message });
+  }
 };
 
 // get single client
@@ -8,6 +35,11 @@ const getClient = async (req, res) => {
   try {
     const { id } = req.params;
 
+    const client = await Client.findById(id);
+
+    if (!client) {
+      return res.status(404).json({ status: "error", data: "404 not found." });
+    }
     res.status(200).json({ status: "success", data: `get client ${id}` });
   } catch (error) {
     res.status(500).json({ status: "error", data: error.message });
@@ -17,9 +49,21 @@ const getClient = async (req, res) => {
 //update client
 const updateClient = async (req, res) => {
   try {
-    const { id } = req.params;
+    const { id: _id } = req.params;
+    const { client } = req.body;
 
-    res.status(200).json({ status: "success", data: `update client${id}` });
+    // check id
+    if (!mongoose.Types.ObjectId.isValid(_id)) {
+      return res.status(404).send("No client with that id");
+    }
+
+    const updatedClient = await Client.findByIdAndUpdate(
+      _id,
+      { ...client, _id },
+      { new: true }
+    );
+
+    res.status(200).json(updatedClient);
   } catch (error) {
     res.status(500).json({ status: "error", data: error.message });
   }
@@ -28,9 +72,14 @@ const updateClient = async (req, res) => {
 // delete client
 const removeClient = async (req, res) => {
   try {
-    const { id } = req.params;
+    const { id: _id } = req.params;
 
-    res.status(200).json({ status: "success", data: `remove client${id}` });
+    // check id
+    if (!mongoose.Types.ObjectId.isValid(_id)) {
+      return res.status(404).send("No client with that id");
+    }
+
+    res.status(200).json({ message: "Client deleted successfully" });
   } catch (error) {
     res.status(500).json({ status: "error", data: error.message });
   }
