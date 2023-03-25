@@ -37,7 +37,7 @@ mongoose
     useUnifiedTopology: true,
   })
   .then(() => {
-    console.log("\n\tCONNECT TO DATABASE\n");
+    console.log("\n\tCONNECTED TO DATABASE\n");
   })
   .catch((err) => {
     console.log("--- error ---");
@@ -47,4 +47,4 @@ mongoose
 // mongoose.set("useFindAndModify", false);
 // mongoose.set("useCreateIndex", true);
 
-server.listen(PORT, () => console.log(`\nserver listening on PORT:${PORT}\n`));
+server.listen(PORT, () => console.log(`\n\tserver listening on PORT:${PORT}\n`));
