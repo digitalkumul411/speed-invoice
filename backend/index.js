@@ -38,6 +38,9 @@ mongoose
   })
   .then(() => {
     console.log("\n\tCONNECTED TO DATABASE\n");
+    server.listen(PORT, () =>
+      console.log(`\n\tserver listening on PORT:${PORT}\n`)
+    );
   })
   .catch((err) => {
     console.log("--- error ---");
@@ -46,5 +49,3 @@ mongoose
 
 // mongoose.set("useFindAndModify", false);
 // mongoose.set("useCreateIndex", true);
-
-server.listen(PORT, () => console.log(`\n\tserver listening on PORT:${PORT}\n`));
