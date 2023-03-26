@@ -11,6 +11,7 @@ const clients = require("./routes/clientRoutes");
 const invoices = require("./routes/invoiceRoutes");
 const profiles = require("./routes/profileRoutes");
 const inventory = require("./routes/inventoryRoutes");
+const user = require("./routes/userRoutes");
 
 // middlewares
 app.use(express.json());
@@ -24,7 +25,7 @@ app.get("/", (req, res) => {
   res.status(200).send("connected");
 });
 
-app.use("/api/v1", [clients, profiles, inventory, invoices]);
+app.use("/api/v1", [clients, profiles, inventory, invoices, user]);
 
 // create http server
 const server = http.createServer(app);
