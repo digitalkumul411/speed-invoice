@@ -30,18 +30,18 @@ app.use("/api/v1", [clients, profiles, inventory, invoices, user]);
 // create http server
 const server = http.createServer(app);
 
-// connect to db
 const DB_URL = process.env.MONGO_URI;
+// connect to db
 mongoose
   .connect(DB_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
   .then(() => {
-    console.log("\n\tCONNECTED TO DATABASE\n");
-    server.listen(PORT, () =>
-      console.log(`\n\tserver listening on PORT:${PORT}\n`)
-    );
+    server.listen(PORT, () => {
+      console.log("\n\tCONNECTED TO DATABASE\n");
+      console.log(`\n\tserver listening on PORT:${PORT}\n`);
+    });
   })
   .catch((err) => {
     console.log("--- error ---");
