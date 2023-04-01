@@ -1,2 +1,2 @@
 # speed-invoice
-An stock tracking and invoicing application
+A stock tracking and invoicing application built using React.js and Expres.js with Mongodb.
