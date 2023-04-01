@@ -24,7 +24,7 @@ const getClients = async (req, res) => {
       numberOfPages: Math.ceil(total / LIMIT),
     });
 
-    res.status(200).json({ data: "clients" });
+    // res.status(200).json({ data: "clients" });
   } catch (error) {
     res.status(500).json({ status: "error", data: error.message });
   }
@@ -40,7 +40,7 @@ const getClient = async (req, res) => {
     if (!client) {
       return res.status(404).json({ status: "error", data: "404 not found." });
     }
-    res.status(200).json({ status: "success", data: `get client ${id}` });
+    res.status(200).json({ status: "success", data: client });
   } catch (error) {
     res.status(500).json({ status: "error", data: error.message });
   }
@@ -85,9 +85,29 @@ const removeClient = async (req, res) => {
   }
 };
 
+// create client
+const createClient = async (req, res) => {
+  try {
+    const client = req.body;
+
+    const newClient = await Client.create({ ...client });
+
+    if (!newClient) {
+      return res
+        .status(400)
+        .json({ status: "error", data: "Error creating client" });
+    }
+
+    res.status(200).json({ status: "success", data: newClient });
+  } catch (error) {
+    res.status(500).json({ status: "error", data: error.message });
+  }
+};
+
 module.exports = {
   getClients,
   getClient,
   removeClient,
   updateClient,
+  createClient,
 };

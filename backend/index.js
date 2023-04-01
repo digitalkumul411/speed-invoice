@@ -11,6 +11,7 @@ const clients = require("./routes/clientRoutes");
 const invoices = require("./routes/invoiceRoutes");
 const profiles = require("./routes/profileRoutes");
 const inventory = require("./routes/inventoryRoutes");
+const user = require("./routes/userRoutes");
 
 // middlewares
 app.use(express.json());
@@ -24,20 +25,23 @@ app.get("/", (req, res) => {
   res.status(200).send("connected");
 });
 
-app.use("/api/v1", [clients, profiles, inventory, invoices]);
+app.use("/api/v1", [clients, profiles, inventory, invoices, user]);
 
 // create http server
 const server = http.createServer(app);
 
-// connect to db
 const DB_URL = process.env.MONGO_URI;
+// connect to db
 mongoose
   .connect(DB_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
   .then(() => {
-    console.log("\n\tCONNECT TO DATABASE\n");
+    server.listen(PORT, () => {
+      console.log("\n\tCONNECTED TO DATABASE\n");
+      console.log(`\n\tserver listening on PORT:${PORT}\n`);
+    });
   })
   .catch((err) => {
     console.log("--- error ---");
@@ -46,5 +50,3 @@ mongoose
 
 // mongoose.set("useFindAndModify", false);
 // mongoose.set("useCreateIndex", true);
-
-server.listen(PORT, () => console.log(`\nserver listening on PORT:${PORT}\n`));
