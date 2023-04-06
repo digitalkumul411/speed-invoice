@@ -1,15 +1,7 @@
 import React from "react";
-import Footer from "../../components/Footer";
-import Header from "../../components/Header";
 
 const Landing = () => {
-  return (
-    <div>
-      <Header />
-      Landing
-      <Footer />
-    </div>
-  );
+  return <div>Landing</div>;
 };
 
 export default Landing;
